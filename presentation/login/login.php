@@ -5,17 +5,17 @@
 <?php 
     require_once '../../_header.php';
 ?>
-<div>
+<div class="container">
 	<form action="./loginhandler.php" method="POST">
-		<div>
+		<div class="form-group">
 			<label for="Login">Login:</label>
-			<input type="text" placeholder="Login" name="Login">
+			<input type="text" placeholder="Login" name="Login" class="form-control">
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="Password">Password:</label>
-			<input type="password" placeholder="Password" name="Password">
+			<input type="password" placeholder="Password" name="Password" class="form-control">
 		</div>
-		<input type="submit" value="Login">
+		<input type="submit" value="Login" class="btn btn-primary">
 	</form>
 </div>
 <?php 
