@@ -5,14 +5,11 @@
     h1 {
         text-align: center;
     }
-    .header {
-        width: 100%;
-    }
 </style>
 </head>
-<div>
-<h1>Secrets Manager</h1>
-</div>
+    <div>
+    	<h1 style="background-color: #fd7e14; margin-bottom: 0;padding: 8px;">Secrets Manager</h1>
+    </div>
 <?php 
     require_once '../../_navbar.php';
 ?>

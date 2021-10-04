@@ -1,12 +1,14 @@
+<?php 
+require_once '../../_header.php';
+require_once '../../autoLoader.php';
+?>
+
 <html>
 <head>
 </head>
 <body>
 	<div class="container">
 <?php 
-    require_once '../../_header.php';
-    require_once '../../autoLoader.php';
-
             $userid = $_SESSION["userid"];
             $secretId = $_POST["secretId"];
             $secretName = $_POST["secretName"];
