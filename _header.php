@@ -10,7 +10,7 @@
     }
 </style>
 </head>
-<div class="header">
+<div>
 <h1>Secrets Manager</h1>
 </div>
 <?php 

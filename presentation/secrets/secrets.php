@@ -10,7 +10,7 @@
     $service = new SecretsService();
     $secrets = $service->getSecrets($userId);
 ?>
-	<div>
+	<div class="container">
 		<form action="./createsecret.php" method="get">
 			<input type="submit" value= "Create Secret">
 		</form>

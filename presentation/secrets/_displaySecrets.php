@@ -2,7 +2,7 @@
 	<thead>
 	</thead>
 <tbody>
-	<?php 
+<?php 
 	foreach($secrets as $secret){
 	    echo "<tr>";
 	       echo '<td><form action="./viewSecret.php" method="POST">';
@@ -16,8 +16,7 @@
         
 	}
 	
-	?>
-
+?>
 </tbody>
 </table>
 

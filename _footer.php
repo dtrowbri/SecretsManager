@@ -1,1 +1,1 @@
-<h3>Secrets Manager &#169;2021</h3>
+<h3 class="fixed-bottom text-center">Secrets Manager &#169;2021</h3>

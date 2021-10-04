@@ -1,8 +1,10 @@
-<?php
+<html>
+<head>
+</head>
+<body>
+<?php 
+require_once '../../_header.php';
 require_once '../../autoLoader.php';
-
-session_status();
-echo " session status: " . session_status();
 
 $login = $_POST["Login"];
 $password = $_POST["Password"];
@@ -24,7 +26,10 @@ if($loginService->validateLogin($login, $passwordHash)){
     
     header("Location: ../secrets/secrets.php");
 } else {
-    echo "The username or password is incorrect";
+    echo '<div class="container alert alert-danger">The username or password is incorrect. Please try again.</div>';
 }
 
+require_once '../../_footer.php';
 ?>
+</body>
+</html>
