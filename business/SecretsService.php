@@ -89,5 +89,41 @@ class SecretsService {
         $conn->close();
         return $kvpair;
     }
+
+    public function deleteSecret(?int $secretId){
+        $dao = new SecretsDAO();
+        $conn = $this->database->getConnection();
+        
+        $conn->autocommit(FALSE);
+        $conn->begin_transaction();
+        
+        echo "1";
+        
+        $keyId = $dao->getKeyId($secretId, $conn);
+        
+        $secretsKeyDeleted = $dao->deleteSecretsKeys($secretId, $conn);
+        if(!$secretsKeyDeleted){
+            $conn->rollback();
+            $conn->close();
+            return FALSE;
+        }
+        
+        $KVPairDeleted = $dao->deleteKVPair($keyId, $conn);
+        if(!$KVPairDeleted){
+            $conn->rollback();
+            $conn->close();
+            return FALSE;
+        }
+        echo "2";
+        $secretDeleted = $dao->deleteSecret($secretId, $conn);
+        if(!$secretDeleted){
+            $conn->rollback();
+            $conn->close();
+            return FALSE;
+        }
+        $conn->commit();
+        $conn->close();
+        return TRUE;
+    }
 }
 ?>

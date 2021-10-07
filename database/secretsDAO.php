@@ -130,6 +130,48 @@ class SecretsDAO {
         }
         
     }
+
+    public function deleteKVPair(?int $keyId, $conn){
+        $deletionQuery = "delete from keyvaluepairs where KeyId = ?";
+        $stmt = $conn->prepare($deletionQuery);
+        $stmt->bind_param('i', $keyId);
+        
+        $stmt->execute();
+        
+        if($stmt->affected_rows == 1){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function deleteSecretsKeys(?int $secretId, $conn){
+        $deletionQuery = "delete from secretskeys where SecretId = ?";
+        $stmt = $conn->prepare($deletionQuery);
+        $stmt->bind_param('i', $secretId);
+        
+        $stmt->execute();
+        
+        if($stmt->affected_rows == 1 ){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function deleteSecret(?int $secretId, $conn){
+        $deletionQuery = "delete from secrets where SecretId = ?";
+        $stmt = $conn->prepare($deletionQuery);
+        $stmt->bind_param('i', $secretId);
+        
+        $stmt->execute();
+        
+        if($stmt->affected_rows == 1){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }
 
 ?>
