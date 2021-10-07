@@ -64,7 +64,22 @@ class LoginDAO {
         } else {
             return FALSE;
         }
+    }
+    
+    public function getUserName(?int $userid, $conn){
+        $query = "select Login from users where UserId = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $userid);
         
+        $stmt->execute();
+        $results = $stmt->get_result();
+        
+        if($results->num_rows == 1){
+            $result = $results->fetch_assoc();
+            return $result["Login"];
+        } else {
+            return null;
+        }
     }
 }
 

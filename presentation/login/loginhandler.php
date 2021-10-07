@@ -14,12 +14,14 @@ $passwordHash = hash("sha512", $salt . $password);
 $loginService = new LoginService();
 if($loginService->validateLogin($login, $passwordHash)){
     $userId = $loginService->getUserId($login);
+    $userName = $loginService->getUserName($userId);
     if($userId == "Error"){
         header("Location: ./login.php");
     }
     
     $_SESSION["authenticated"] = true;
     $_SESSION["userid"] = $userId;
+    $_SESSION['username'] = $userName;
      
     header("Location: ../secrets/secrets.php");
 } else {

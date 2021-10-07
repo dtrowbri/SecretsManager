@@ -44,6 +44,14 @@ class LoginService {
         $conn->close();
         return $userId;
     }
+    
+    public function getUserName(?string $userId){
+        $conn = $this->database->getConnection();
+        $dao = new LoginDAO();
+        $userName = $dao->getUserName($userId, $conn);
+        $conn->close();
+        return $userName;
+    }
 }
 
 ?>
