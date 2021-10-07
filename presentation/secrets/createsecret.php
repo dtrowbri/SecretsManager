@@ -1,4 +1,6 @@
 <?php 
+echo "1";
+require_once '../shared/authenticationCheck.php';
 require_once '../../_header.php';
 require_once '../../autoLoader.php';
 ?>

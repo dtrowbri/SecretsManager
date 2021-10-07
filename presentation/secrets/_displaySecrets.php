@@ -15,7 +15,7 @@
            echo '<td><form action=".\deletesecret.php" method="POST">';
            echo '<input type="hidden" name="secretId" value="' . $secret->getSecretId() . '">';
            echo '<input type="hidden" name="secretName" value="' . $secret->getSecretName() . '">';
-           echo '<input type="submit" value="delete" style="font-size: 36px; background-color: white; border: white; color: blue; test-decoration: underline; cursor: pointer;">';
+           echo '<input type="submit" value="delete" style="font-size: 36px; background-color: white; border: white; color: blue; test-decoration: underline; cursor: pointer; float: right ">';
            echo '</form></td>';
       
         echo "</tr>";

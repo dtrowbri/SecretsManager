@@ -3,6 +3,7 @@
 </head>
 <body>
 <?php 
+    require_once '../shared/authenticationCheck.php';
     require_once '../../autoLoader.php';
     require_once '../../_header.php';
     

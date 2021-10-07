@@ -20,10 +20,7 @@ if($loginService->validateLogin($login, $passwordHash)){
     
     $_SESSION["authenticated"] = true;
     $_SESSION["userid"] = $userId;
-    
-    echo "userid : " . $userId;
-    echo " userid : " . $_SESSION["userid"];
-    
+     
     header("Location: ../secrets/secrets.php");
 } else {
     echo '<div class="container alert alert-danger">The username or password is incorrect. Please try again.</div>';
