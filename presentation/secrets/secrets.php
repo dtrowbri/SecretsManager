@@ -3,11 +3,11 @@
 	<script>
 		function displaySearchResults(){
 			var filterElem = document.getElementById("filterSecretsInput");
-			var filterValue = filterElem.value;
+			var filterValue = filterElem.value.toLowerCase();
 			
 			var tableRows = document.getElementById("tableBody");
 			for(let i = 0; i < tableRows.children.length; i++){
-				if(tableRows.children[i].id.startsWith(filterValue)){
+				if(tableRows.children[i].id.toLowerCase().startsWith(filterValue)){
 					showChildrenElements(tableRows.children[i]);
 				} else {
 					hideChildrenElements(tableRows.children[i]);
