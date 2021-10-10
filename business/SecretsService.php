@@ -125,5 +125,13 @@ class SecretsService {
         $conn->close();
         return TRUE;
     }
+
+    public function updateKVPair(?KVPair $kvpair){
+        $conn = $this->database->getConnection();
+        $dao = new SecretsDAO();
+        $isSuccessful = $dao->updateKVPair($kvpair, $conn);
+        $conn->close();
+        return $isSuccessful;
+    }
 }
 ?>

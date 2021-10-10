@@ -172,6 +172,24 @@ class SecretsDAO {
             return FALSE;
         }
     }
+    
+    public function updateKVPair(?KVPair $kvpair, $conn){
+        $query = "update `keyvaluepairs` set `Key` = ?, `Value` = ? where `KeyId` = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssi', $kvpair->getKey(), $kvpair->getValue(), $kvpair->getKeyId());
+        
+        $conn->autocommit(FALSE);
+        $conn->begin_transaction();
+        $stmt->execute();
+        
+        if($stmt->affected_rows == 1){
+            $conn->commit();
+            return true;
+        } else {
+            $conn->rollback();
+            return false;
+        }
+    }
 }
 
 ?>
