@@ -20,6 +20,7 @@
 				<input type="password" placeholder="password" name="passwordVerification" class="form-control shadow-sm p-3 mb-5 bg-body rounded">
 			</div>
 			<input type="submit" value="Sign Up" class="btn btn-primary">
+			<button type="button" onclick="window.location.href='../login/login.php'" class="btn btn-primary" style="margin-left: 50px;">Login</button>
 		</form>
 	</div>
 <?php

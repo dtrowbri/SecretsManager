@@ -1,5 +1,16 @@
+<script>
+	function addRow(){
+		$.ajax({
+			type: 'POST',
+			url: '@Url.Content("./_addKeyValueRow.php")',
+			success: function(data){
+				alert("adding row");
+				$('#extraRows').innerHtml = data;
+			}
+		});
+	}
+</script>
 <?php 
-echo "1";
 require_once '../shared/authenticationCheck.php';
 require_once '../../_header.php';
 require_once '../../autoLoader.php';
@@ -24,7 +35,11 @@ require_once '../../autoLoader.php';
     					<input type="text" name="Value" class="form-control shadow-sm p-3 mb-5 bg-body rounded">
 					</div>
 			</div>
+			<button type="button" onclick="addRow()">Add Row</button>
+			<div id="extraRows">
+			</div>
 			<input type="submit" value="Add Secret" class="btn btn-primary">
+			<button type="button" onclick="window.location.href='./secrets.php'" class="btn btn-primary" style="margin-left: 50px;">Cancel</button>
 		</form>
 	</div>
 <?php require_once '../../_footer.php'; ?>

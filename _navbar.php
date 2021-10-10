@@ -20,7 +20,7 @@
     		if(isset($_SESSION['username']) != false || $_SESSION['username'] != null || $_SESSION['username'] != false){
     		    $username = $_SESSION['username'];
     		    if($username != null){
-    		        echo '<p class="navbar-brand" style="margin: 0; ">Hello ' . $username . '</p>';
+    		        echo '<p class="navbar-brand" style="margin: 0; ">Hello ' . $username . '!</p>';
     		    }
     		}
 		?>
