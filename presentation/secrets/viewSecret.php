@@ -36,7 +36,7 @@ require_once '../../autoLoader.php';
             echo '</div></div>';
             
             echo '<input type="submit" value="Update" class="btn btn-primary">';
-            echo '<input type="button" value="cancel" onclick="window.location.href=\'./secrets.php\'" class="btn btn-primary" style="margin-left: 50px;">';
+            echo '<input type="button" value="Cancel" onclick="window.location.href=\'./secrets.php\'" class="btn btn-primary" style="margin-left: 50px;">';
             echo '</form>';
         ?>
 	</div>
