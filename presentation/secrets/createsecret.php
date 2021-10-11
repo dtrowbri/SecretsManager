@@ -35,7 +35,6 @@ require_once '../../autoLoader.php';
     					<input type="text" name="Value" class="form-control shadow-sm p-3 mb-5 bg-body rounded">
 					</div>
 			</div>
-			<button type="button" onclick="addRow()">Add Row</button>
 			<div id="extraRows">
 			</div>
 			<input type="submit" value="Add Secret" class="btn btn-primary">

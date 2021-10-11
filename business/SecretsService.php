@@ -133,5 +133,16 @@ class SecretsService {
         $conn->close();
         return $isSuccessful;
     }
+
+    public function doesSecretExist(?int $userId, ?string $secretName){
+        $conn = $this->database->getConnection();
+        $dao = new SecretsDAO();
+        $doesExist = $dao->doesSecretExist($secretName, $userId, $conn);
+        $conn->close();
+        if($doesExist){
+            return true;
+        }
+        return false;
+    }
 }
 ?>

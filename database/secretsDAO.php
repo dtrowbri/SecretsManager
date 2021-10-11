@@ -190,6 +190,21 @@ class SecretsDAO {
             return false;
         }
     }
+    
+    public function doesSecretExist(?string $secret,?int $userId, $conn){
+        $query = "select * from usersecrets as us inner join secrets as s on us.SecretsId = s.SecretId where s.SecretName = ? and us.UserId = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('si', $secret, $userId);
+        
+        $stmt->execute();
+        $results = $stmt->get_result();
+        
+        if($results->num_rows > 0){
+            return true;   
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
