@@ -10,7 +10,7 @@ require_once '../../business/RegistrationService.php';
 echo "reg service added";
 require_once '../../database/registrationDAO.php';
 echo "reg dao added";
-require_once '../../database/database';
+require_once '../../database/database.php';
 echo "database added";
 
 echo "session status: " . session_status();
