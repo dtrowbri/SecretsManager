@@ -3,12 +3,14 @@
 <body>
 <?php 
 require_once '../../_header.php';
+echo "adding autoloader";
 require_once '../../autoLoader.php';
 
 $login = $_POST["Login"];
 $password = $_POST["password"];
 $passwordVerification = $_POST["passwordVerification"];
 
+echo "creating service";
 $registrationService = new RegistrationService();
 if($registrationService->doesLoginExist($login)){
     echo "The login " . $login . " is already in use, please use a different login";
