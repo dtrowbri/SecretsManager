@@ -9,7 +9,6 @@ class RegistrationService {
     private $database = null;
     
     public function __construct(){
-        echo "registration constructor";
         $this->database = new Database();
     }
     
