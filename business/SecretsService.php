@@ -55,23 +55,16 @@ class SecretsService {
     }
     
     public function getSecrets(?int $userId){
-        echo "get test";
-        
         $dao = new SecretsDAO();
         $secretsArr = array();
         
         $conn = $this->database->getConnection();
-        
-        echo "database connected";
         $results = $dao->getUserSecretsList($userId, $conn);
-        echo "results retrieved";
-        //if(count($results) == 0){
+
         if($results == null){
-            echo "results null";
             $conn->close();
             return null;
         }
-        echo "skipped logic";
         foreach($results as $result){
            $secret = $dao->getSecret($result, $conn);
            if($secret != null){
