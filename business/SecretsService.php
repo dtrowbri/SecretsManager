@@ -70,6 +70,7 @@ class SecretsService {
             $conn->close();
             return null;
         }
+        echo "skipped logic";
         foreach($results as $result){
            $secret = $dao->getSecret($result, $conn);
            if($secret != null){
