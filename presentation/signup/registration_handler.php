@@ -4,10 +4,10 @@
 <body>
 <?php 
 require_once '../../_header.php';
-//require_once '../../autoLoader.php';
-require_once '../../business/RegistrationService.php';
-require_once '../../database/registrationDAO.php';
-require_once '../../database/database.php';
+require_once '../../autoLoader.php';
+//require_once '../../business/RegistrationService.php';
+//require_once '../../database/registrationDAO.php';
+//require_once '../../database/database.php';
 
 $login = $_POST["Login"];
 $password = $_POST["password"];
