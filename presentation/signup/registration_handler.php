@@ -5,8 +5,10 @@
 <?php 
 require_once '../../_header.php';
 echo "<p>adding autoloader</p>";
-require_once '../../autoLoader.php';
-//require_once '../../business/RegistrationService.php';
+//require_once '../../autoLoader.php';
+require_once '../../business/RegistrationService.php';
+require_once '../../database/registrationDAO.php';
+require_once '../../database/database';
     
 $login = $_POST["Login"];
 $password = $_POST["password"];
