@@ -46,9 +46,13 @@
     require_once '../../autoLoader.php';
     require_once '../../_header.php';
     
+    echo "test";
     $userId = $_SESSION["userid"];
-    $service = new SecretsService();
-    $secrets = $service->getSecrets($userId);
+    echo "test2";
+	$service = new SecretsService();
+    echo "test3";
+	$secrets = $service->getSecrets($userId);
+	echo "test4";
 ?>
 	<div class="container">
 		
