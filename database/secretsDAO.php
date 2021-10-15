@@ -76,10 +76,11 @@ class SecretsDAO {
     }
     
     public function getUserSecretsList(?int $userId, $conn){
+        echo "dao start";
         $secretsQuery = "select SecretsId from usersecrets where UserId = ?";
         $stmt = $conn->prepare($secretsQuery);
         $stmt->bind_param('i', $userId);
-        
+        echo "parambind";
         $stmt->execute();
         $results = $stmt->get_result();
  
