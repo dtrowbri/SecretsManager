@@ -13,6 +13,7 @@ $passwordVerification = $_POST["passwordVerification"];
 
 echo "creating service";
 $registrationService = new RegistrationService();
+echo "serivce created";
 if($registrationService->doesLoginExist($login)){
     echo "The login " . $login . " is already in use, please use a different login";
 } else {
