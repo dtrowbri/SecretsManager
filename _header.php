@@ -12,4 +12,5 @@
     </div>
 <?php 
     require_once '../../_navbar.php';
+    session_start();
 ?>
