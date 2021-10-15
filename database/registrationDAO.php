@@ -1,6 +1,5 @@
 <?php
 
-require_once '../database/database.php';
 
 class RegistrationDAO {
     public function addUser(?string $user, $conn){
