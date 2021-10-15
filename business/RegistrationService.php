@@ -1,8 +1,8 @@
 <?php
 
 //require_once '../autoLoader.php';
-//require_once '../database/database.php';
-//require_once '../database/registrationDAO.php';
+require_once '../database/database.php';
+require_once '../database/registrationDAO.php';
 
 class RegistrationService {
 
@@ -10,7 +10,7 @@ class RegistrationService {
     
     public function __construct(){
         echo "registration constructor";
-        //$this->database = new Database();
+        $this->database = new Database();
     }
     
     public function registerNewUser(?string $login, ?string $passwordHash){
