@@ -10,7 +10,7 @@ class RegistrationService {
     
     public function __construct(){
         echo "registration constructor";
-        $this->database = new Database();
+        //$this->database = new Database();
     }
     
     public function registerNewUser(?string $login, ?string $passwordHash){
