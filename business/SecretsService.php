@@ -55,6 +55,8 @@ class SecretsService {
     }
     
     public function getSecrets(?int $userId){
+        echo "get test";
+        
         $dao = new SecretsDAO();
         $secretsArr = array();
         
