@@ -7,8 +7,11 @@ require_once '../../_header.php';
 echo "<p>adding autoloader</p>";
 //require_once '../../autoLoader.php';
 require_once '../../business/RegistrationService.php';
+echo "reg service added";
 require_once '../../database/registrationDAO.php';
+echo "reg dao added";
 require_once '../../database/database';
+echo "database added";
     
 $login = $_POST["Login"];
 $password = $_POST["password"];
