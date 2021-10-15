@@ -1,5 +1,7 @@
 <?php
 
+require_once './database.php';
+
 class RegistrationDAO {
     public function addUser(?string $user, $conn){
         $addUserQuery = "insert into users (`UserId`,`Login`) values (null,?)";
