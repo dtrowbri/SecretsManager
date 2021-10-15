@@ -65,7 +65,8 @@ class SecretsService {
         echo "database connected";
         $results = $dao->getUserSecretsList($userId, $conn);
         echo "results retrieved";
-        if(count($results) == 0){
+        //if(count($results) == 0){
+        if($results == null){
             echo "results null";
             $conn->close();
             return null;
