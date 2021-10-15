@@ -12,8 +12,10 @@ require_once '../../database/registrationDAO.php';
 echo "reg dao added";
 require_once '../../database/database';
 echo "database added";
-    
+
+echo "session status: " . session_status();
 $login = $_POST["Login"];
+echo "first post";
 $password = $_POST["password"];
 $passwordVerification = $_POST["passwordVerification"];
 
