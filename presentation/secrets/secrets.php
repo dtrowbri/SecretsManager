@@ -50,6 +50,7 @@
     $service = new SecretsService();
     $secrets = $service->getSecrets($userId);
 ?>
+	<!--
 	<div class="container">
 		
 		<div class="row" style="margin-top: 30px;">
@@ -65,6 +66,7 @@
 		<?php include("_displaySecrets.php"); ?>
 		
 	</div>
+-->
 <?php 
     require_once '../../_footer.php';
 ?>
