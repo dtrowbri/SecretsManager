@@ -21,11 +21,6 @@ for($i = 1; $i <= $numOfKVPairs; $i++){
 
 $service = new SecretsService();
 $isSuccessful = $service->updateKVPair($KVPairs);
-if($isSuccessful){
-    echo "Successful: " . true;
-}else {
-    echo "Successful: " . true;
-}
 
 if(!$isSuccessful){
     require_once '../../_header.php';
