@@ -153,6 +153,7 @@ class SecretsService {
             if(!$noChange){
                 $isSuccessful = $dao->updateKVPair($kvpair, $conn);
                 if(!$isSuccessful){
+                    echo "Key: " . $kvpair->getKey();
                     echo "rolling back";
                     $conn->rollback();
                     $conn->close();
