@@ -139,11 +139,7 @@ class SecretsService {
 
         $conn->autocommit(FALSE);
         $conn->begin_transaction();
-        
-        for($i = 0; $i < count($kvpairs); $i++){
-            echo "Key: " . $kvpairs[0]->getKey();   
-        }
-        
+                
         foreach($kvpairs as $kvpair){
             echo "KVPair Key: " . $kvpair->getKey();
             $isSuccessful = $dao->updateKVPair($kvpair, $conn);
