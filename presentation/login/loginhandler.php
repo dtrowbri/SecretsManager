@@ -12,7 +12,6 @@ $password = $_POST["Password"];
 $salt = "salt";
 $passwordHash = hash("sha512", $salt . $password);
 
-echo "createing service";
 $loginService = new LoginService();
 if($loginService->validateLogin($login, $passwordHash)){
     $userId = $loginService->getUserId($login);
