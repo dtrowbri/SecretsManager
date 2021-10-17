@@ -189,20 +189,21 @@ class SecretsDAO {
     }
     
     public function updateKVPair(?KVPair $kvpair, $conn){
+        echo "update kvpair";
         $query = "update `keyvaluepairs` set `Key` = ?, `Value` = ? where `KeyId` = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssi', $kvpair->getKey(), $kvpair->getValue(), $kvpair->getKeyId());
         
-        $conn->autocommit(FALSE);
-        $conn->begin_transaction();
+        echo "execute";
         $stmt->execute();
+        echo "affected rows: " . $stmt->affected_rows;
         
         if($stmt->affected_rows == 1){
-            $conn->commit();
-            return true;
+            echo "success";
+            //return true;
         } else {
-            $conn->rollback();
-            return false;
+            echo "failure";
+            //return false;
         }
     }
     
