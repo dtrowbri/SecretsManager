@@ -4,8 +4,7 @@
 <body>
 <?php
 
-require_once '../../_header.php';
-echo "adding autoloader";    
+require_once '../../_header.php';   
 require_once '../../autoLoader.php';
 
 $login = $_POST["Login"];
