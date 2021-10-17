@@ -139,7 +139,7 @@ class SecretsService {
 
         $conn->autocommit(FALSE);
         $conn->begin_transaction();
-
+        print_r($kvpairs);
         foreach($kvpairs as $kvpair){
             echo "KVPair Key: " . $kvpair->getKey();
             $isSuccessful = $dao->updateKVPair($kvpair, $conn);
@@ -147,7 +147,7 @@ class SecretsService {
                 echo "rolling back";
                 $conn->rollback();
                 $conn->close();
-                return false;
+                //return false;
             }
         }
         $conn->commit();
