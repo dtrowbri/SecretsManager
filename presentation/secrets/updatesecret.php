@@ -24,12 +24,12 @@ for($i = 1; $i <= $numOfKVPairs; $i++){
 
 $service = new SecretsService();
 $isSuccessful = $service->updateKVPair($KVPairs);
-/*
+
 if(!$isSuccessful){
     require_once '../../_header.php';
     echo '<p>Error: Failed to update the key or value!</p>';
     require_once '../../_footer.php';
 } else {
     header("Location: ./secrets.php");
-}*/
+}
 ?>
