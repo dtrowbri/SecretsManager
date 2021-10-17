@@ -19,6 +19,9 @@ for($i = 1; $i <= $numOfKVPairs; $i++){
     array_push($KVPairs, $KVPair);
 }
 
+print_r($KVPairs);
+
+/*
 $service = new SecretsService();
 $isSuccessful = $service->updateKVPair($KVPairs);
 
@@ -28,5 +31,5 @@ if(!$isSuccessful){
     require_once '../../_footer.php';
 } else {
     header("Location: ./secrets.php");
-}
+}*/
 ?>
