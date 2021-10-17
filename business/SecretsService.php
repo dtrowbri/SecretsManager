@@ -141,13 +141,23 @@ class SecretsService {
         $conn->begin_transaction();
                 
         foreach($kvpairs as $kvpair){
-            echo "KVPair Key: " . $kvpair->getKey();
-            $isSuccessful = $dao->updateKVPair($kvpair, $conn);
-            if(!$isSuccessful){
-                echo "rolling back";
-                $conn->rollback();
-                $conn->close();
-                //return false;
+            $noChange = false;
+            $currentKVPair = $dao->getKVPair($kvpair->getKeyId(), $conn);
+            
+            if($currentKVPair->getKey() == $kvpair->getKey()){
+                if($currentKVPair->getValue() == $kvpair->getValue()){
+                    $noChange = true;   
+                }
+            }
+            
+            if(!$noChange){
+                $isSuccessful = $dao->updateKVPair($kvpair, $conn);
+                if(!$isSuccessful){
+                    echo "rolling back";
+                    $conn->rollback();
+                    $conn->close();
+                    //return false;
+                }
             }
         }
         $conn->commit();
