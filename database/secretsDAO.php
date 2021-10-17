@@ -131,6 +131,21 @@ class SecretsDAO {
         
     }
 
+    public function getKeyIds(?int $secretId, $conn){
+        $query = "select KeyId from secretsKeys where SecretId = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $secretId);
+
+        $stmt->execute();
+        $results = $stmt->get_result();
+
+        if($results->num_rows > 0){
+            return $results->fetch_all();
+        }   else {
+            return null;
+        }
+    }
+    
     public function deleteKVPair(?int $keyId, $conn){
         $deletionQuery = "delete from keyvaluepairs where KeyId = ?";
         $stmt = $conn->prepare($deletionQuery);
@@ -152,7 +167,7 @@ class SecretsDAO {
         
         $stmt->execute();
         
-        if($stmt->affected_rows == 1 ){
+        if($stmt->affected_rows > 0 ){
             return TRUE;
         } else {
             return FALSE;

@@ -2,15 +2,30 @@
 require_once '../shared/authenticationCheck.php';
 require_once '../../autoLoader.php';
 
-$keyId = $_POST["keyId"];
-$key = $_POST["key"];
-$value = $_POST["value"];
+//$keyId = $_POST["keyId"];
+//$key = $_POST["key"];
+//$value = $_POST["value"];
 $secretId = $_POST["secretId"];
+$numOfKVPairs = $_POST['numOfKVPairs'];
 
-$KVPair = new KVPair($keyId, $key, $value);
+$KVPairs = array();
+
+for($i = 1; $i <= $numOfKVPairs; $i++){
+    $keyId = "keyId" . $i;
+    $key = "key" . $i;
+    $value = "value" . $i;
+    
+    $KVPair = new KVPair($_POST[$keyId], $_POST[$key], $_POST[$value]);
+    array_push($KVPairs, $KVPair);
+}
 
 $service = new SecretsService();
-$isSuccessful = $service->updateKVPair($KVPair);
+$isSuccessful = $service->updateKVPair($KVPairs);
+if($isSuccessful){
+    echo "Successful: " . true;
+}else {
+    echo "Successful: " . true;
+}
 
 if(!$isSuccessful){
     require_once '../../_header.php';

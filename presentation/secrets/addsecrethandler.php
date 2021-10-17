@@ -8,9 +8,24 @@ require_once '../../_header.php';
 require_once '../../autoLoader.php';
 
 $secretName = $_POST['SecretName'];
-$key = $_POST['Key'];
-$value = $_POST['Value'];
+$rowNumber = $_POST['numberOfRows'];
+//$key = $_POST['Key'];
+//$value = $_POST['Value'];
 $login = $_SESSION['userid'];
+
+$KVPairs = array();
+
+for($i = 1; $i <= $rowNumber; $i++){
+    $keyName = "key" . $i;
+    $key = $_POST[$keyName];
+    $valueName = "value" . $i;
+    $value = $_POST[$valueName];
+    
+    $KVPair = new KVPair(0, $key, $value);
+    array_push($KVPairs, $KVPair);
+}
+
+
 
 $service = new SecretsService();
 $doesExist = $service->doesSecretExist($login, $secretName);
@@ -21,7 +36,7 @@ if($doesExist){
     require_once '../../_footer.php';
 }else {
 
-    $results = $service->addSecrets($login, $secretName, $key, $value);
+    $results = $service->addSecrets($login, $secretName, $KVPairs);
     
     if($results){
         echo '<div class="container"> Secret was created successfully</div>';

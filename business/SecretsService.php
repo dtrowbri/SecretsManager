@@ -8,7 +8,7 @@ class SecretsService {
         $this->database = new Database();
     }
     
-    public function addSecrets(?string $userId, ?string $secretName,  $Key,  $Value){
+    public function addSecrets(?string $userId, ?string $secretName,  $KVPairs){
         
         $secretsDAO = new SecretsDAO();
         $userDAO = new LoginDAO();
@@ -25,24 +25,24 @@ class SecretsService {
         }
         $secretId = $conn->insert_id;
         
-        $secretsDAO->addKeyValuePair($Key, $Value, $conn);
-        if($conn->insert_id == 0){
-            $conn->rollback();
-            $conn->close();
-            return "Error";
+        foreach($KVPairs as $KVPair){
+            $secretsDAO->addKeyValuePair($KVPair->getKey(), $KVPair->getValue(), $conn);
+            if($conn->insert_id == 0){
+                $conn->rollback();
+                $conn->close();
+                return "Error";
+            }
+            $keyId = $conn->insert_id;
+    
+            $successfulSKV = $secretsDAO->relateSecretAndKeyValue($secretId, $keyId, $conn);
+            if(!$successfulSKV){
+                $conn->rollback();
+                $conn->close();
+                return "Error";
+            }
         }
-        $keyId = $conn->insert_id;
-
-        $successfulSKV = $secretsDAO->relateSecretAndKeyValue($secretId, $keyId, $conn);
-        if(!$successfulSKV){
-            $conn->rollback();
-            $conn->close();
-            return "Error";
-        }
-
         $successfulUS = $secretsDAO->relateUserAndSecret($userId, $secretId, $conn);
         if(!$successfulUS){
-
             $conn->rollback();
             $conn->close();
             return "Error";
@@ -79,42 +79,52 @@ class SecretsService {
     public function getKVPair(?int $secretId){
         $conn = $this->database->getConnection();
         $dao = new SecretsDAO();
-        $keyId = $dao->getKeyId($secretId, $conn);
+        $keyIds = $dao->getKeyIds($secretId, $conn);
 
-        if($keyId == null){
+        if($keyIds == null){
             $conn->close();
             return null;
         }
-        $kvpair = $dao->getKVPair($keyId, $conn);
+        
+        $KVPairs = array();
+
+        foreach($keyIds as $key){
+            $kvpair = $dao->getKVPair($key[0], $conn);
+            array_push($KVPairs, $kvpair);
+        }
         $conn->close();
-        return $kvpair;
+        return $KVPairs;
     }
 
     public function deleteSecret(?int $secretId){
+        echo "this";
         $dao = new SecretsDAO();
         $conn = $this->database->getConnection();
         
         $conn->autocommit(FALSE);
         $conn->begin_transaction();
         
-        echo "1";
         
-        $keyId = $dao->getKeyId($secretId, $conn);
-        
+        $keyIds = $dao->getKeyIds($secretId, $conn);
+
         $secretsKeyDeleted = $dao->deleteSecretsKeys($secretId, $conn);
         if(!$secretsKeyDeleted){
             $conn->rollback();
             $conn->close();
             return FALSE;
         }
-        
-        $KVPairDeleted = $dao->deleteKVPair($keyId, $conn);
-        if(!$KVPairDeleted){
-            $conn->rollback();
-            $conn->close();
-            return FALSE;
+        echo "that";
+        foreach($keyIds as $key){
+            echo "Key: " . $key[0];
+            $KVPairDeleted = $dao->deleteKVPair($key[0], $conn);
+            if(!$KVPairDeleted){
+                echo "rolling back";
+                $conn->rollback();
+                $conn->close();
+                return FALSE;
+            }
         }
-        echo "2";
+
         $secretDeleted = $dao->deleteSecret($secretId, $conn);
         if(!$secretDeleted){
             $conn->rollback();
@@ -126,12 +136,24 @@ class SecretsService {
         return TRUE;
     }
 
-    public function updateKVPair(?KVPair $kvpair){
+    public function updateKVPair($kvpairs){
         $conn = $this->database->getConnection();
         $dao = new SecretsDAO();
-        $isSuccessful = $dao->updateKVPair($kvpair, $conn);
+
+        $conn->autocommit(FALSE);
+        $conn->begin_transaction();
+
+        foreach($kvpairs as $kvpair){
+            $isSuccessful = $dao->updateKVPair($kvpair, $conn);
+            if(!$isSuccessful){
+                $conn->rollback();
+                $conn->close();
+                return false;
+            }
+        }
+        $conn->commit();
         $conn->close();
-        return $isSuccessful;
+        return true;
     }
 
     public function doesSecretExist(?int $userId, ?string $secretName){
