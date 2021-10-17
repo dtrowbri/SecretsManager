@@ -2,13 +2,23 @@
 
 session_start();
 
-spl_autoload_register(function($class){
+require_once 'business/LoginService.php';
+require_once 'business/RegistrationService.php';
+require_once 'business/SecretsService.php';
+require_once 'business/models/KVPair.php';
+require_once 'business/models/Secret.php';
+require_once 'database/database.php';
+require_once 'database/loginDAO.php';
+require_once 'database/registrationDAO.php';
+require_once 'database/secretsDAO.php';
+
+/*spl_autoload_register(function($class){
     
     $lastDirectories = substr(getcwd(), strlen(__DIR__));
     
     $numberOfLastDirectories = substr_count($lastDirectories, '\\');
     
-    $directories = ["business", "database", "presentation", "presentation/login", "presentation/secrets", "presentation/signup", "business/models"];
+    $directories = ["/business", "/database", "/presentation", "/presentation/login", "/presentation/secrets", "/presentation/signup", "/business/models"];
     
     foreach($directories as $dir){
         $currentDirectory = $dir;
@@ -24,5 +34,5 @@ spl_autoload_register(function($class){
             }
         }
     }
-});
+});*/
 ?>
