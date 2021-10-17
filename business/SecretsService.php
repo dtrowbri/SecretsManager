@@ -153,17 +153,15 @@ class SecretsService {
             if(!$noChange){
                 $isSuccessful = $dao->updateKVPair($kvpair, $conn);
                 if(!$isSuccessful){
-                    echo "Key: " . $kvpair->getKey();
-                    echo "rolling back";
                     $conn->rollback();
                     $conn->close();
-                    //return false;
+                    return false;
                 }
             }
         }
         $conn->commit();
         $conn->close();
-        //return true;
+        return true;
     }
 
     public function doesSecretExist(?int $userId, ?string $secretName){
