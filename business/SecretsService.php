@@ -141,8 +141,10 @@ class SecretsService {
         $conn->begin_transaction();
 
         foreach($kvpairs as $kvpair){
+            echo "KVPair Key: " . $kvpair->getKey();
             $isSuccessful = $dao->updateKVPair($kvpair, $conn);
             if(!$isSuccessful){
+                echo "rolling back";
                 $conn->rollback();
                 $conn->close();
                 return false;
@@ -150,7 +152,7 @@ class SecretsService {
         }
         $conn->commit();
         $conn->close();
-        return true;
+        //return true;
     }
 
     public function doesSecretExist(?int $userId, ?string $secretName){
