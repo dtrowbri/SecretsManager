@@ -1,3 +1,3 @@
 <?php
-header("Location: /SecretsManager/presentation/login/login.php")
+header("Location: /presentation/login/login.php")
 ?>
