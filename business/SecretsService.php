@@ -97,7 +97,6 @@ class SecretsService {
     }
 
     public function deleteSecret(?int $secretId){
-        echo "this";
         $dao = new SecretsDAO();
         $conn = $this->database->getConnection();
         
@@ -113,12 +112,10 @@ class SecretsService {
             $conn->close();
             return FALSE;
         }
-        echo "that";
+
         foreach($keyIds as $key){
-            echo "Key: " . $key[0];
             $KVPairDeleted = $dao->deleteKVPair($key[0], $conn);
             if(!$KVPairDeleted){
-                echo "rolling back";
                 $conn->rollback();
                 $conn->close();
                 return FALSE;
