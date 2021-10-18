@@ -97,7 +97,6 @@ class SecretsService {
     }
 
     public function deleteSecret(?int $secretId){
-        echo "this";
         $dao = new SecretsDAO();
         $conn = $this->database->getConnection();
         
@@ -113,12 +112,11 @@ class SecretsService {
             $conn->close();
             return FALSE;
         }
-        echo "that";
+
         foreach($keyIds as $key){
-            echo "Key: " . $key[0];
+
             $KVPairDeleted = $dao->deleteKVPair($key[0], $conn);
             if(!$KVPairDeleted){
-                echo "rolling back";
                 $conn->rollback();
                 $conn->close();
                 return FALSE;
@@ -139,16 +137,27 @@ class SecretsService {
     public function updateKVPair($kvpairs){
         $conn = $this->database->getConnection();
         $dao = new SecretsDAO();
-
+        
         $conn->autocommit(FALSE);
         $conn->begin_transaction();
-
+        
         foreach($kvpairs as $kvpair){
-            $isSuccessful = $dao->updateKVPair($kvpair, $conn);
-            if(!$isSuccessful){
-                $conn->rollback();
-                $conn->close();
-                return false;
+            $noChange = false;
+            $currentKVPair = $dao->getKVPair($kvpair->getKeyId(), $conn);
+            
+            if($currentKVPair->getKey() == $kvpair->getKey()){
+                if($currentKVPair->getValue() == $kvpair->getValue()){
+                    $noChange = true;
+                }
+            }
+            
+            if(!$noChange){
+                $isSuccessful = $dao->updateKVPair($kvpair, $conn);
+                if(!$isSuccessful){
+                    $conn->rollback();
+                    $conn->close();
+                    return false;
+                }
             }
         }
         $conn->commit();
