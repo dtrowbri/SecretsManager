@@ -1,10 +1,10 @@
 <?php
 
 class Database {
-    private $server = "x8autxobia7sgh74.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
-    private $user = "d8jpt1j5l95dqdc8";
-    private $password = "c2fr7zshqy4hq7oa";
-    private $database = "wbupv9ogyasn9zg1";
+    private $server = "34.127.126.35";
+    private $user = "admin";
+    private $password = "Thisisnotagoodpassword1234!#$";
+    private $database = "secretsmanager";
     private $port = "3306";
     
     public function getConnection(){
