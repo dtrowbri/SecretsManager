@@ -132,7 +132,7 @@ class SecretsDAO {
     }
 
     public function getKeyIds(?int $secretId, $conn){
-        $query = "select KeyId from secretsKeys where SecretId = ?";
+        $query = "select KeyId from secretskeys where SecretId = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $secretId);
 
