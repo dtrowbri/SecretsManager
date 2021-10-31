@@ -9,7 +9,9 @@ class RegistrationService {
     private $database = null;
     
     public function __construct(){
+        echo "creating database object";
         $this->database = new Database();
+        echo "database object created";
     }
     
     public function registerNewUser(?string $login, ?string $passwordHash){
@@ -48,9 +50,13 @@ class RegistrationService {
     }
     
     public function doesLoginExist(?string $Login){
-       $conn = $this->database->getConnection();
+        echo "does user exist";
+        $conn = $this->database->getConnection();
+        echo "connection to database created";
        $dao = new RegistrationDAO();
+        echo "registration dao created";
        $doesExist = $dao->doesLoginExist($Login, $conn);
+        echo "verified if user exists";
        $conn->close();
        return $doesExist;
     }
