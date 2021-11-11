@@ -11,7 +11,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 $logger = new Logger('main');
-$logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
+$logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
 
 $secretName = $_POST['SecretName'];
 $rowNumber = $_POST['numberOfRows'];
