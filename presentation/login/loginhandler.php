@@ -10,7 +10,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 $logger = new Logger('main');
-$logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+$logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
 
 $login = $_POST["Login"];
 $password = $_POST["Password"];
