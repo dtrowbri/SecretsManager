@@ -16,8 +16,9 @@ $logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
 $login = $_POST["Login"];
 $password = $_POST["password"];
 $passwordVerification = $_POST["passwordVerification"];
-
+echo "<br>registration service";
 $registrationService = new RegistrationService();
+echo "<br>registration service created";
 if($registrationService->doesLoginExist($login)){
     echo "The login " . $login . " is already in use, please use a different login";
 } else {
