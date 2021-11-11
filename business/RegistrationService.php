@@ -3,8 +3,8 @@
 //require_once '../autoLoader.php';
 //require_once '../database/database.php';
 //require_once '../database/registrationDAO.php';
-#use Monolog\Logger;
-#use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class RegistrationService {
 
@@ -12,13 +12,13 @@ class RegistrationService {
     private $logger = null;
     
     public function __construct(){
-        #echo "<br>creating constructor log";
+        echo "<br>creating constructor log";
         $this->logger = new Logger('main');
-        #echo "<br>in constructor";
+        echo "<br>in constructor";
         $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
-        #echo "<br>stream set up";
+        echo "<br>stream set up";
         $this->logger->debug("Creating Registration Service", ['session' => session_id()]);
-        #echo "<br>log written";
+        echo "<br>log written";
         $this->database = new Database();
     }
     
