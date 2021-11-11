@@ -8,6 +8,7 @@ class Database {
     private $user = "d8jpt1j5l95dqdc8";
     private $password = "c2fr7zshqy4hq7oa";
     private $database = "wbupv9ogyasn9zg1";
+    private $port = 3306;
     private $logger = null;
     
     public function __construct(){
