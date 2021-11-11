@@ -73,7 +73,7 @@ class SecretsService {
         $conn = $this->database->getConnection();
         
         $results = $dao->getUserSecretsList($userId, $conn);
-        if(count($results) == 0){
+        if($results == null){
             $conn->close();
             return null;
         }
