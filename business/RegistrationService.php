@@ -19,7 +19,7 @@ class RegistrationService {
         echo "<br>stream set up";
         #$this->logger->debug("Creating Registration Service", ['session' => session_id()]);
         echo "<br>log written";
-        $this->database = new Database();
+        #$this->database = new Database();
     }
     
     public function registerNewUser(?string $login, ?string $passwordHash){
