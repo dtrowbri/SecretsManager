@@ -2,13 +2,15 @@
 </head>
 <body>
 <?php 
+echo "<br>reqs";
 require_once '../../_header.php';
 require_once '../../autoLoader.php';
-
+echo "<br>monolog";
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-
+echo "<br>creating new logger";
 $logger = new Logger('main');
+echo "<br>creating new stream";
 $logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
 
 $login = $_POST["Login"];
