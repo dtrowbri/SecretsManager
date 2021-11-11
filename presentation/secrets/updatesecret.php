@@ -6,7 +6,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 $logger = new Logger('main');
-$logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
+$logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
 
 $secretId = $_POST["secretId"];
 $numOfKVPairs = $_POST['numOfKVPairs'];
