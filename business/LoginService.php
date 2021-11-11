@@ -13,7 +13,7 @@ class LoginService {
     
     public function __construct(){
         $this->logger = new Logger('main');
-        $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
+        $this->logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
         $this->logger->debug("Creating LoginService", ["session"=> session_id(), 'class' => 'LoginService', 'method' => 'construct']);
         $this->database = new Database();
     }
