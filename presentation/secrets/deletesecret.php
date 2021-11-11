@@ -6,7 +6,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 $logger = new Logger('main');
-$logger->pushHandler( new StreamHandler('std://stdout', Logger::DEBUG));
+$logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
 
 $secretId = $_POST["secretId"];
 
