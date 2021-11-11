@@ -9,7 +9,7 @@ class SecretsDAO {
     
     public function __construct(){
         $this->logger = new Logger('main');
-        $this->logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
+        $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
         $this->logger->debug("Creating SecretsDAO", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'construct']);
     }
     
