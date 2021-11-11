@@ -13,11 +13,11 @@ class RegistrationService {
     
     public function __construct(){
         echo "<br>creating constructor log";
-        $this->logger = new Logger('main');
+        #$this->logger = new Logger('main');
         echo "<br>in constructor";
-        $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
+        #$this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
         echo "<br>stream set up";
-        $this->logger->debug("Creating Registration Service", ['session' => session_id()]);
+        #$this->logger->debug("Creating Registration Service", ['session' => session_id()]);
         echo "<br>log written";
         $this->database = new Database();
     }
