@@ -13,7 +13,7 @@ class RegistrationService {
     
     public function __construct(){
         $this->logger = new Logger('main');
-        $this->logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
+        $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
         $this->logger->debug("Creating Registration Service", ['session' => session_id()]);
         $this->database = new Database();
     }
