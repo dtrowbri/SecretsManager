@@ -13,7 +13,7 @@ class Database {
     
     public function __construct(){
         $this->logger = new Logger('main');
-        $this->logger->pushHandler( new StreamHandler('php://stderr', Logger::DEBUG));
+        $this->logger->pushHandler( new StreamHandler('php://stdout', Logger::DEBUG));
         $this->logger->debug("Creating database object", ['session' => session_id(), 'class' => 'Database', 'method' => 'construct']);
     }
     
