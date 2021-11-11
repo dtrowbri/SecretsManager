@@ -7,10 +7,14 @@ require_once '../shared/authenticationCheck.php';
 require_once '../../_header.php';
 require_once '../../autoLoader.php';
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$logger = new Logger('main');
+$logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+
 $secretName = $_POST['SecretName'];
 $rowNumber = $_POST['numberOfRows'];
-//$key = $_POST['Key'];
-//$value = $_POST['Value'];
 $login = $_SESSION['userid'];
 
 $KVPairs = array();
@@ -39,8 +43,10 @@ if($doesExist){
     $results = $service->addSecrets($login, $secretName, $KVPairs);
     
     if($results){
+        $logger->info("Secret created", ["session"=> session_id(), 'user' => $login, 'secret' => $secretName, 'class' => 'addsecrethandler.php']);
         echo '<div class="container"> Secret was created successfully</div>';
     } else {
+        $logger->warning("Secret could not be created", ["session" => session_id(), 'user' => $login, 'secret' => $secretName, 'class' => 'addsecrethandler.php']);
         echo '<div class="container alert alert-danger">There was an error creating the secret.</div>';
     }
 }

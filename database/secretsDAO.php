@@ -1,13 +1,28 @@
 <?php
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class SecretsDAO {
+    
+    private $logger = null;
+    
+    public function __construct(){
+        $this->logger = new Logger('main');
+        $this->logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+        $this->logger->debug("Creating SecretsDAO", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'construct']);
+    }
     
     public function addSecret(?string $secret, $conn){
         $addSecretQuery = "insert into secrets (`SecretId`, `SecretName`) values (null, ?)";
         $stmt = $conn->prepare($addSecretQuery);
         $stmt->bind_param('s', $secret);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing add secret query", ['session' => session_id(), 'secret' => $secret, 'class' => 'SecretsDAO', 'method' => 'addSecret']);
+        }
         
         if($stmt->affected_rows ==1){
             return TRUE;
@@ -21,7 +36,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($addKeyValuePairQuery);
         $stmt->bind_param('ss', $key, $value);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing add keyvaluepair query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'addKeyValuePair']);
+        }
         
         if($stmt->affected_rows == 1){
             return TRUE;
@@ -35,7 +54,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($relateSecretAndKVQuery);
         $stmt->bind_param('ii', $secretId, $keyValueId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing relate secret and key query", ['session' => session_id(), 'secret' => $secretId, 'class' => 'SecretsDAO', 'method' => 'relateSecretAndKeyValue']);
+        }
         
         if($stmt->affected_rows == 1){
             return TRUE;
@@ -49,7 +72,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($relateUserAndSecret);
         $stmt->bind_param('ii', $userId, $secretId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing relate user and secret query", ['session' => session_id(), 'userid' => $userId, 'secret' => $secretId, 'class' => 'SecretsDAO', 'method' => 'relateUserAndSecret']);
+        }
         
         if($stmt->affected_rows == 1){
             return TRUE;
@@ -63,7 +90,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($getSecretsQuery);
         $stmt->bind_param('i', $secretId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get secret query", ['session' => session_id(), 'secret' => $secretId, 'class' => 'SecretsDAO', 'method' => 'getSecret']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){
@@ -80,7 +112,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($secretsQuery);
         $stmt->bind_param('i', $userId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get users secrets query", ['session' => session_id(), 'user' => $userId, 'class' => 'SecretsDAO', 'method' => 'getUserSecretsList']);
+        }
+        
         $results = $stmt->get_result();
  
         if($results->num_rows > 0){
@@ -101,7 +138,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($kvPairQuery);
         $stmt->bind_param('i', $keyId);
 
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get keyvaluepair query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'getKVPair']);
+        }
+        
         $results = $stmt->get_result();
 
         if($results->num_rows == 1){
@@ -119,7 +161,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($keyIdQuery);
         $stmt->bind_param('i', $secretId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get key id query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'getKeyId']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){
@@ -136,7 +183,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $secretId);
 
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get key ids for secret query", ['session' => session_id(), 'secret' => $secretId, 'class' => 'SecretsDAO', 'method' => 'getKeyIds']);
+        }
+        
         $results = $stmt->get_result();
 
         if($results->num_rows > 0){
@@ -151,7 +203,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($deletionQuery);
         $stmt->bind_param('i', $keyId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing delete keyvaluepair query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'deleteKVPair']);
+        }
         
         if($stmt->affected_rows == 1){
             return TRUE;
@@ -165,7 +221,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($deletionQuery);
         $stmt->bind_param('i', $secretId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing delete secret key relationship query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'deleteSecretsKeys']);
+        }
         
         if($stmt->affected_rows > 0 ){
             return TRUE;
@@ -179,7 +239,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($deletionQuery);
         $stmt->bind_param('i', $secretId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing delet secret query", ['session' => session_id(), 'secret' => $secretId, 'class' => 'SecretsDAO', 'method' => 'deleteSecret']);
+        }
         
         if($stmt->affected_rows == 1){
             return TRUE;
@@ -193,7 +257,11 @@ class SecretsDAO {
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssi', $kvpair->getKey(), $kvpair->getValue(), $kvpair->getKeyId());
 
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing updating keyvaluepair query", ['session' => session_id(), 'class' => 'SecretsDAO', 'method' => 'updateKVPair']);
+        }
         
         if($stmt->affected_rows == 1){
             return true;
@@ -207,7 +275,12 @@ class SecretsDAO {
         $stmt = $conn->prepare($query);
         $stmt->bind_param('si', $secret, $userId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing does secret exist query", ['session' => session_id(), 'secret' => $secret, 'class' => 'SecretsDAO', 'method' => 'doesSecretExist']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows > 0){

@@ -3,16 +3,23 @@
 //require_once '../autoLoader.php';
 //require_once '../database/database.php';
 //require_once '../database/registrationDAO.php';
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class RegistrationService {
 
     private $database = null;
+    private $logger = null;
     
     public function __construct(){
+        $this->logger = new Logger('main');
+        $this->logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+        $this->logger->debug("Creating Registration Service", ['session' => session_id()]);
         $this->database = new Database();
     }
     
     public function registerNewUser(?string $login, ?string $passwordHash){
+        $this->logger->debug("Registering new user", ['session' => session_id(), 'user' => $login, 'class' => 'RegistrationService', 'method' => 'registerNewUser']);
         $conn = $this->database->getConnection();
         $dao = new RegistrationDAO();
         
@@ -21,6 +28,7 @@ class RegistrationService {
         
         $dao->addUser($login, $conn);
         if($conn->insert_id == 0){
+            $this->logger->error("Error adding user to database", ['session' => session_id(), 'user' => $login, 'class' => 'RegistrationService', 'method' => 'registerNewUser']);
             $conn->rollback();
             $conn->close();
             return FALSE;
@@ -29,6 +37,7 @@ class RegistrationService {
         
         $dao->addPassword($passwordHash, $conn);
         if($conn->insert_id == 0){
+            $this->logger->error("Error adding password to database", ['session' => session_id(), 'class' => 'RegistrationService', 'method' => 'registerNewUser']);
             $conn->rollback();
             $conn->close();
             return FALSE;
@@ -37,6 +46,7 @@ class RegistrationService {
 
         $isSuccess = $dao->relateUserAndPassword($userInsertId, $passwordInsertId, $conn);
         if(!$isSuccess){
+            $this->logger->error("Error connecting user and password", ['session' => session_id(), 'user' => $login, 'class' => 'RegistrationService', 'method' => 'registerNewUser']);
             $conn->rollback();
             $conn->close();
             return FALSE;
@@ -48,6 +58,7 @@ class RegistrationService {
     }
     
     public function doesLoginExist(?string $Login){
+        $this->logger->debug("Verifying if login exists", ['session' => session_id(), 'user' => $Login, 'Location' => 'RegistrationService.php', 'class' => 'RegistrationService', 'method' => 'doesLoginExist']);
        $conn = $this->database->getConnection();
        $dao = new RegistrationDAO();
        $doesExist = $dao->doesLoginExist($Login, $conn);

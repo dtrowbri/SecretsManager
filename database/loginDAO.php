@@ -2,13 +2,29 @@
 
 //require_once './database.php';
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class LoginDAO {
+    
+    private $logger = null;
+    
+    public function __construct(){
+        $this->logger = new Logger('main');
+        $this->logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+        $this->logger->debug("Creating LoginDAO", ['session' => session_id(), 'class' => 'LoginDAO', 'method' => 'construct']);
+    }
     
     public function getPasswordHash(?int $passwordId, $conn){
             $getPasswordHash = "select PasswordHash from passwords where PasswordId = ?";
             $stmt = $conn->prepare($getPasswordHash);
             $stmt->bind_param('i', $passwordId);
-            $stmt->execute();
+            
+            try{
+                $stmt->execute();
+            } catch (Exception $e) {
+                $this->logger->error("Error executing get password hash query", ['session' => session_id(), 'class' => 'LoginDAO', 'method' => 'getPasswordHash']);
+            }
             
             $results = $stmt->get_result();
             
@@ -25,7 +41,12 @@ class LoginDAO {
         $stmt = $conn->prepare($userIdQuery);
         $stmt->bind_param('s', $Login);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing loginID query", ['session' => session_id(), 'user' => $Login, 'class' => 'LoginDAO', 'method' => 'getLoginId']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){
@@ -40,7 +61,12 @@ class LoginDAO {
         $stmt = $conn->prepare($passwordIdQuery);
         $stmt->bind_param('i', $userId);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing password query", ['session' => session_id(), 'user' => $userId, 'class' => 'LoginDAO', 'method' => 'getPasswordId']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){
@@ -55,7 +81,12 @@ class LoginDAO {
         $stmt = $conn->prepare($passwordMatchQuery);
         $stmt->bind_param('is', $PasswordId, $PasswordHash);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing password match query", ['session' => session_id(), 'class' => 'LoginDAO', 'method' => 'validatePasswordMatch']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){
@@ -71,7 +102,12 @@ class LoginDAO {
         $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $userid);
         
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        } catch (Exception $e) {
+            $this->logger->error("Error executing get username query", ['session' => session_id(), 'user' => $userid, 'class' => 'LoginDAO', 'method' => 'getUserName']);
+        }
+        
         $results = $stmt->get_result();
         
         if($results->num_rows == 1){

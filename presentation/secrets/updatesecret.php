@@ -2,11 +2,16 @@
 require_once '../shared/authenticationCheck.php';
 require_once '../../autoLoader.php';
 
-//$keyId = $_POST["keyId"];
-//$key = $_POST["key"];
-//$value = $_POST["value"];
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$logger = new Logger('main');
+$logger->pushHandler( new StreamHandler('../../app.log', Logger::DEBUG));
+
 $secretId = $_POST["secretId"];
 $numOfKVPairs = $_POST['numOfKVPairs'];
+
+$logger->info("Updating secret", ['session' => session_id(), 'secret_id' => $secretId, 'class' => 'updatesecret.php']);
 
 $KVPairs = array();
 
@@ -22,8 +27,10 @@ for($i = 1; $i <= $numOfKVPairs; $i++){
 $service = new SecretsService();
 $isSuccessful = $service->updateKVPair($KVPairs);
 if($isSuccessful){
+    $logger->info("Update secret successful", ['session' => session_id(), 'secret_id' => $secretId, 'class' => 'updatesecret.php']);
     echo "Successful: " . true;
 }else {
+    $logger->error("Update secret failed", ['session' => session_id(), 'secret_id' => $secretId, 'class' => 'updatesecret.php']);
     echo "Successful: " . true;
 }
 

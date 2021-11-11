@@ -4,6 +4,7 @@
 <body>
 <?php 
     require_once '../../_header.php';
+    require_once '../../autoLoader.php';
 ?>
 <div class="container position-absolute top-50 start-50 translate-middle">
 	<form action="./loginhandler.php" method="POST">
