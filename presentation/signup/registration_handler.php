@@ -29,10 +29,10 @@ if($registrationService->doesLoginExist($login)){
         $passwordHash = hash("sha512", $salt . $password);
         $isSuccessful = $registrationService->registerNewUser($login, $passwordHash);
         if($isSuccessful){
-            $logger->info("Login created", ['user' => $login, 'class' => 'registration_handler.php']);
+            #$logger->info("Login created", ['user' => $login, 'class' => 'registration_handler.php']);
             echo '<div class="container">Your login has been successfully created.</div>';
         } else {
-            $logger->error("Error registering new user.", ['session' => session_id(), 'user' => $login, 'class' => 'registration_handler.php']);
+            #$logger->error("Error registering new user.", ['session' => session_id(), 'user' => $login, 'class' => 'registration_handler.php']);
             echo '<div class="container alert alert-danger">There was an error creating your login. Please try again.</div>';
         }
     }
