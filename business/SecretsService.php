@@ -83,7 +83,7 @@ class SecretsService {
                array_push($secretsArr, $secret);
            }
         }
-        
+        $this->logger->debug("Leaving getSecrets", ['session' => session_id]);
         $conn->close();
         return $secretsArr;
     }
